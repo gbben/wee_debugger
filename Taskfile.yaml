@@ -1,0 +1,17 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  init-env:
+    cmds:
+      - uv venv
+      - task: env
+    silent: true
+
+  env:
+    cmds:
+      - uv pip compile pyproject.toml -o requirements.txt -q
+      - uv pip sync requirements.txt
+      - uv pip install -e .
+    silent: true

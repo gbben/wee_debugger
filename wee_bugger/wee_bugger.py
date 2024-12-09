@@ -67,7 +67,7 @@ class SimpleDebugger:
         filename = frame.f_code.co_filename
         current_line = frame.f_lineno
         
-        # Show 5 lines before and after current line
+        # * Show 5 lines before and after current line
         start_line = max(current_line - 5, 1)
         end_line = current_line + 5
         
@@ -84,15 +84,15 @@ class SimpleDebugger:
     def trace_function(self, frame, event: str, arg: Any) -> Optional[callable]:
         """Main trace function called by Python's trace mechanism."""
         if event == 'line':
-            # Convert frame to FrameInfo object for easier access
+            # * Convert frame to FrameInfo object for easier access
             self.current_frame = inspect.getframeinfo(frame)
             
-            # If we're not in continue mode, show current line and prompt
+            # * If we're not in continue mode, show current line and prompt
             if not self.continue_mode:
                 self._show_current_line()
                 self._prompt_command()
                 
-            # Reset step mode after each step
+            # * Reset step mode after each step
             self.step_mode = False
             
         return self.trace_function if not self.continue_mode else None
@@ -119,7 +119,7 @@ class SimpleDebugger:
                 
                 if command in self.commands:
                     self.commands[command](arg)
-                    if command in ['n', 'c']:  # Commands that continue execution
+                    if command in ['n', 'c']:  # * Commands that continue execution
                         break
                 else:
                     print(f"Unknown command: {command}")
@@ -133,7 +133,7 @@ class SimpleDebugger:
         """Start the debugger."""
         sys.settrace(self.trace_function)
 
-# Example usage
+# ! Example usage
 def example_function(n):
     x = 1
     y = 2
